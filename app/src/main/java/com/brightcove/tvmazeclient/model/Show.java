@@ -21,7 +21,7 @@ public class Show {
     private ShowNetwork network;
     private ShowWebChannel webChannel;
     private ShowExternals externals;
-    private ShowImage image;
+    private ImageRef image;
     private String summary;
     private int updated;
     private ShowLinks _links;
@@ -90,7 +90,7 @@ public class Show {
         return externals;
     }
 
-    public ShowImage getImage() {
+    public ImageRef getImage() {
         return image;
     }
 

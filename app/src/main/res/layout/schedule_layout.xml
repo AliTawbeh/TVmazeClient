@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="schedule"
+            type="com.brightcove.tvmazeclient.model.Schedule"/>
+    </data>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:paddingBottom="@dimen/vertical_rv_item_padding"
+        android:paddingLeft="@dimen/horizontal_rv_item_padding"
+        android:paddingRight="@dimen/horizontal_rv_item_padding"
+        android:paddingTop="@dimen/vertical_rv_item_padding">
+
+        <TextView
+            android:id="@+id/tv_schedule_airtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{schedule.airtime}"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            tools:text="8:00"/>
+
+        <TextView
+            android:id="@+id/tv_schedule_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="@dimen/list_item_title_left_margin"
+            android:layout_marginStart="@dimen/list_item_title_start_margin"
+            android:text="@{schedule.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/tv_schedule_airtime"
+            tools:text="The episode title " />
+
+        <TextView
+            android:id="@+id/tv_schedule_show_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@{schedule.show.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/sub_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_schedule_name"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            tools:text="bla bla bla bla" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

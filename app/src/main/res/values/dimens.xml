@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="vertical_rv_item_padding">12dp</dimen>
+    <dimen name="horizontal_rv_item_padding">16dp</dimen>
+    <dimen name="list_item_title_left_margin">16dp</dimen>
+    <dimen name="list_item_title_start_margin">@dimen/list_item_title_left_margin</dimen>
+    <dimen name="list_item_title_right_margin">16dp</dimen>
+    <dimen name="list_item_title_end_margin">@dimen/list_item_title_right_margin</dimen>
+</resources>

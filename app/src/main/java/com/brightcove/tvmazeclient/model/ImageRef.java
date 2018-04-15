@@ -4,7 +4,7 @@ package com.brightcove.tvmazeclient.model;
  * Created by Ali on 12-Apr-18.
  */
 
-public class ShowImage {
+public class ImageRef {
     private String medium;
     private String original;
 
@@ -18,7 +18,7 @@ public class ShowImage {
 
     @Override
     public String toString() {
-        return "ShowImage{" +
+        return "ImageRef{" +
                 "medium='" + medium + '\'' +
                 ", original='" + original + '\'' +
                 '}';

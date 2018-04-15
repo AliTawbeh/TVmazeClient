@@ -1,5 +1,7 @@
 package com.brightcove.tvmazeclient.model;
 
+import com.google.gson.JsonObject;
+
 /**
  * Created by Ali on 12-Apr-18.
  */
@@ -14,7 +16,7 @@ public class Schedule {
     private String airtime;
     private String airstamp;
     private int runtime;
-    private String image;
+    private ImageRef image;
     private String summary;
     private Show show;
     private ScheduleLinks _links;
@@ -55,7 +57,7 @@ public class Schedule {
         return runtime;
     }
 
-    public String getImage() {
+    public ImageRef getImage() {
         return image;
     }
 
