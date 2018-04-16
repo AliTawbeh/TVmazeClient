@@ -3,10 +3,6 @@ package com.brightcove.tvmazeclient.recyclerviewAdapter;
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
 
-import com.brightcove.tvmazeclient.recyclerviewAdapter.ClickHandler;
-import com.brightcove.tvmazeclient.recyclerviewAdapter.ItemBinder;
-import com.brightcove.tvmazeclient.recyclerviewAdapter.RecyclerViewAdapter;
-
 import java.util.List;
 
 /**
@@ -20,7 +16,7 @@ public class RecyclerViewBindings {
 
     @BindingAdapter({"itemBinder"})
     public static <T> void setItemBinder(RecyclerView recyclerView, ItemBinder itemBinder){
-        RecyclerViewAdapter<T> adapter = new RecyclerViewAdapter<>(itemBinder,(List<T>) recyclerView.getTag(DATA_KEY), (StringComparator<T>) recyclerView.getTag(COMPARATOR_KEY));
+        RecyclerViewAdapter<T> adapter = new RecyclerViewAdapter<>(itemBinder,(List<T>) recyclerView.getTag(DATA_KEY), (StringGenericComparator<T>) recyclerView.getTag(COMPARATOR_KEY));
 
         ClickHandler<T> clickHandler = (ClickHandler<T>) recyclerView.getTag(CLICK_HANDLER_KEY);
 
@@ -49,7 +45,7 @@ public class RecyclerViewBindings {
     }
 
     @BindingAdapter("comparator")
-    public static <T> void setComparator(RecyclerView recyclerView, StringComparator<T> comparator){
+    public static <T> void setComparator(RecyclerView recyclerView, StringGenericComparator<T> comparator){
         RecyclerViewAdapter<T> adapter = (RecyclerViewAdapter<T>) recyclerView.getAdapter();
         if(adapter==null)
             recyclerView.setTag(COMPARATOR_KEY,comparator);

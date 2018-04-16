@@ -1,15 +1,21 @@
 package com.brightcove.tvmazeclient.view;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
+import android.view.View;
+import android.widget.DatePicker;
 
 import com.brightcove.tvmazeclient.BR;
 import com.brightcove.tvmazeclient.R;
@@ -20,20 +26,24 @@ import com.brightcove.tvmazeclient.databinding.ActivityScheduleBinding;
 import com.brightcove.tvmazeclient.recyclerviewAdapter.ClickHandler;
 import com.brightcove.tvmazeclient.recyclerviewAdapter.ItemBinder;
 
+import java.util.Calendar;
+
 import timber.log.Timber;
 //TODO create an interface for this guy
-public class ScheduleActivity extends AppCompatActivity {
+public class ScheduleActivity extends AppCompatActivity
+        implements DatePickerDialog.OnDateSetListener{
     private static final String ACTIVITY_NAME = ScheduleActivity.class.getName();
-    ActivityScheduleBinding binding;
+    ActivityScheduleBinding mBinding;
+    ScheduleViewModel mScheduleViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_schedule);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_schedule);
         //TODO use and interface instead of concrete class
-        ScheduleViewModel scheduleViewModel = new ScheduleViewModel();
-        binding.setScheduleViewModel(scheduleViewModel);
-        binding.setScheduleView(this);
-        binding.rvSchedule.setLayoutManager(new LinearLayoutManager(this));
+        mScheduleViewModel = new ScheduleViewModel();
+        mBinding.setScheduleViewModel(mScheduleViewModel);
+        mBinding.setScheduleView(this);
+        mBinding.rvSchedule.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -84,9 +94,41 @@ public class ScheduleActivity extends AppCompatActivity {
         startActivity(intent);
     };
 
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
     private void filterRecyclerView(String query) {
-        RecyclerView.Adapter adapter = binding.rvSchedule.getAdapter();
+        RecyclerView.Adapter adapter = mBinding.rvSchedule.getAdapter();
         if(adapter instanceof RecyclerViewAdapter)
             ((RecyclerViewAdapter) adapter).getFilter().filter(query);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        mScheduleViewModel.setScheduleDate(year,month,dayOfMonth);
+    }
+
+    public static class DatePickerFragment  extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+            if(getActivity() instanceof DatePickerDialog.OnDateSetListener){
+                ((DatePickerDialog.OnDateSetListener) getActivity()).onDateSet(view,year,month,day);
+            } else
+                throw new IllegalArgumentException(getString(R.string.implement_date_set_listener_exception));
+        }
     }
 }

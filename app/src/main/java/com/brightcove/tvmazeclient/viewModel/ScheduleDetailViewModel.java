@@ -4,6 +4,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.Observable;
 
+import com.brightcove.tvmazeclient.BR;
 import com.brightcove.tvmazeclient.datamanager.RemoteScheduleManager;
 import com.brightcove.tvmazeclient.model.Schedule;
 
@@ -12,16 +13,16 @@ import com.brightcove.tvmazeclient.model.Schedule;
  */
 
 public class ScheduleDetailViewModel extends BaseObservable{
-    @Bindable
     private Schedule schedule;
     public ScheduleDetailViewModel(int scheduleID){
         try {
             schedule= RemoteScheduleManager.getInstance().getScheduleByID(scheduleID);
+            notifyPropertyChanged(BR.schedule);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-
+    @Bindable
     public Schedule getSchedule(){
         return schedule;
     }

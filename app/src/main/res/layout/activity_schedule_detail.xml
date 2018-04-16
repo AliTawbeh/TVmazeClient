@@ -1,6 +1,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="com.brightcove.tvmazeclient.utils.StringUtil"/>
         <variable
             name="scheduleDetailViewModel"
             type="com.brightcove.tvmazeclient.viewModel.ScheduleDetailViewModel"/>
@@ -44,7 +45,7 @@
                 android:id="@+id/tv_show_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{scheduleDetailViewModel.getSchedule.summary}"/>
+                android:text="@{StringUtil.toHTMLFormat(scheduleDetailViewModel.getSchedule.summary)}"/>
         </LinearLayout>
     </ScrollView>
 

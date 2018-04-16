@@ -30,13 +30,13 @@ public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAda
     private CustomOnListChangedCallback mCustomOnListChangedCallback;
     private LayoutInflater mInflater;
     private ClickHandler<T> mClickHandler;
-    private StringComparator<T> mStringComparator;
+    private StringGenericComparator<T> mStringGenericComparator;
 
-    RecyclerViewAdapter(@NonNull ItemBinder itemBinder, @NonNull List<T> items, StringComparator<T> stringComparator){
+    RecyclerViewAdapter(@NonNull ItemBinder itemBinder, @NonNull List<T> items, StringGenericComparator<T> stringGenericComparator){
         mItemBinder=itemBinder;
         mCustomOnListChangedCallback = new CustomOnListChangedCallback();
         setItems(items);
-        mStringComparator = stringComparator;
+        mStringGenericComparator = stringGenericComparator;
     }
     @Override
     public RecyclerViewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -142,7 +142,7 @@ public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAda
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        if (mStringComparator.compare(charString,item)) {
+                        if (mStringGenericComparator.contained(charString,item)) {
                             filteredList.add(item);
                         }
                     }
@@ -165,8 +165,8 @@ public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAda
         };
     }
 
-    public void setComparator(StringComparator<T> comparator) {
-        this.mStringComparator = comparator;
+    public void setComparator(StringGenericComparator<T> comparator) {
+        this.mStringGenericComparator = comparator;
     }
 
     public static class RecyclerViewViewHolder extends RecyclerView.ViewHolder{

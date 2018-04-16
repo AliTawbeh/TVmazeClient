@@ -48,7 +48,23 @@ public class RemoteScheduleManager {
                         UnknownHostException unknownHostException = (UnknownHostException) throwable;
                         Timber.d("***" +unknownHostException.getMessage());
                     }
+                });
+    }
 
+    public void fetchSchedulesByDate(String date) {
+        TVmazeAPIClient.getInstance()
+                .getUSScheduleByDate(date)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(scheduleList -> {
+                    mScheduleList.clear();
+                    mScheduleList.addAll(scheduleList);
+                }, throwable -> {
+                    Timber.d("***" +throwable.getMessage() + "**" + throwable.getClass().getSimpleName());
+                    if(throwable instanceof UnknownHostException){
+                        UnknownHostException unknownHostException = (UnknownHostException) throwable;
+                        Timber.d("***" +unknownHostException.getMessage());
+                    }
                 });
     }
 
