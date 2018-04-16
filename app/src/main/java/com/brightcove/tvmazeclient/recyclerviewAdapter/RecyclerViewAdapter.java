@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import java.util.List;
 
@@ -16,21 +18,25 @@ import java.util.List;
  * Created by Ali on 14-Apr-18.
  */
 
-public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewViewHolder> implements View.OnClickListener{
+public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewViewHolder>
+        implements View.OnClickListener, Filterable{
     //TAG ID used to attach the item <T> to the viewHolder
     private static final int ITEM_TAG = -929;
     //Observable list of Items in the recyclerView
     private ObservableList<T> mItems;
+    private ObservableList<T> mFilteredItems;
     private ItemBinder mItemBinder;
     //The callback that is called by ObservableList when the list has changed.
     private CustomOnListChangedCallback mCustomOnListChangedCallback;
     private LayoutInflater mInflater;
-    private ClickHandler mClickHandler;
+    private ClickHandler<T> mClickHandler;
+    private StringComparator<T> mStringComparator;
 
-    RecyclerViewAdapter(@NonNull ItemBinder itemBinder, @NonNull List<T> items){
+    RecyclerViewAdapter(@NonNull ItemBinder itemBinder, @NonNull List<T> items, StringComparator<T> stringComparator){
         mItemBinder=itemBinder;
         mCustomOnListChangedCallback = new CustomOnListChangedCallback();
         setItems(items);
+        mStringComparator = stringComparator;
     }
     @Override
     public RecyclerViewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,24 +50,24 @@ public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAda
     @Override
     public void onBindViewHolder(RecyclerViewViewHolder holder, int position) {
         //if the list of items is null or empty do nothing
-        if(mItems ==null || mItems.size()==0)
+        if(mFilteredItems ==null || mFilteredItems.size()==0)
             return;
         //Get the item at the position
-        T item = mItems.get(position);
+        T item = mFilteredItems.get(position);
         if(item==null)
             return;
         //Pass the variable item to the view holder, where the viewHolder's layout populates the views
         if(mItemBinder !=null)
             holder.mViewDataBinding.setVariable(mItemBinder.getBindingVariable(),item);
         //Attach the item to the viewHolder so it can be used for example when we want to delete it in swipe event
-        holder.mViewDataBinding.getRoot().setTag(ITEM_TAG,position);
+        holder.mViewDataBinding.getRoot().setTag(ITEM_TAG,item);
         holder.mViewDataBinding.getRoot().setOnClickListener(this);
         holder.mViewDataBinding.executePendingBindings();
     }
 
     @Override
     public int getItemCount() {
-        return mItems !=null ? mItems.size():0;
+        return mFilteredItems !=null ? mFilteredItems.size():0;
     }
 
     @Override
@@ -102,22 +108,65 @@ public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAda
         } else {
             mItems = null;
         }
+
+        mFilteredItems=mItems;
     }
 
 
     @Override
     public void onClick(View v) {
         if(mClickHandler!=null)
-            mClickHandler.onClick((Integer) v.getTag(ITEM_TAG));
+            mClickHandler.onClick((T) v.getTag(ITEM_TAG));
     }
 
-    public void setClickHandler(ClickHandler clickHandler) { mClickHandler = clickHandler; }
+    public void setClickHandler(ClickHandler<T> clickHandler) { mClickHandler = clickHandler; }
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         //set a reference for the recyclerView in the ListChangedCallback
         mCustomOnListChangedCallback.setRecyclerView(recyclerView);
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    mFilteredItems = mItems;
+                } else {
+                    ObservableList<T> filteredList = new ObservableArrayList<>();
+                    for (T item : mItems) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (mStringComparator.compare(charString,item)) {
+                            filteredList.add(item);
+                        }
+                    }
+
+                    mFilteredItems = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mFilteredItems;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                mFilteredItems = (ObservableList<T>) filterResults.values;
+
+                // refresh the list with filtered data
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    public void setComparator(StringComparator<T> comparator) {
+        this.mStringComparator = comparator;
     }
 
     public static class RecyclerViewViewHolder extends RecyclerView.ViewHolder{

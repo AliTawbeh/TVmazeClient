@@ -57,4 +57,11 @@ public class RemoteScheduleManager {
             throw new IndexOutOfBoundsException();
         return mScheduleList.get(scheduleIndex);
     }
+
+    public Schedule getScheduleByID(int scheduleID) throws IllegalArgumentException{
+        for(Schedule schedule:mScheduleList)
+            if(schedule.getId()==scheduleID)
+                return schedule;
+        throw new IllegalArgumentException();
+    }
 }

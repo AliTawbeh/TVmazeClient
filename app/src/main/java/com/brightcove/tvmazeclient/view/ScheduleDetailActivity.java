@@ -11,8 +11,8 @@ import com.brightcove.tvmazeclient.viewModel.ScheduleDetailViewModel;
 
 public class ScheduleDetailActivity extends AppCompatActivity {
 
-    public static final String SHOW_POS = "SHOW_POS";
-    public static final int SHOW_POS_DEFAULT_VAL = -1;
+    public static final String SCHEDULE_ID = "SCHEDULE_ID";
+    public static final int SCHEDULE_ID_DEFAULT_VALUE = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +20,9 @@ public class ScheduleDetailActivity extends AppCompatActivity {
         ActivityScheduleDetailBinding binding =
                 DataBindingUtil.setContentView(this, R.layout.activity_schedule_detail);
         Intent intent = getIntent();
-        if(intent.hasExtra(SHOW_POS)){
-            int showPosition=intent.getIntExtra(SHOW_POS, SHOW_POS_DEFAULT_VAL);
-            ScheduleDetailViewModel scheduleDetailViewModel = new ScheduleDetailViewModel(showPosition);
+        if(intent.hasExtra(SCHEDULE_ID)){
+            int scheduleID=intent.getIntExtra(SCHEDULE_ID, SCHEDULE_ID_DEFAULT_VALUE);
+            ScheduleDetailViewModel scheduleDetailViewModel = new ScheduleDetailViewModel(scheduleID);
             binding.setScheduleDetailViewModel(scheduleDetailViewModel);
         }
     }

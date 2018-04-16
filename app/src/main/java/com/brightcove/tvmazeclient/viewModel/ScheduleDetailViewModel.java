@@ -14,9 +14,9 @@ import com.brightcove.tvmazeclient.model.Schedule;
 public class ScheduleDetailViewModel extends BaseObservable{
     @Bindable
     private Schedule schedule;
-    public ScheduleDetailViewModel(int scheduleIndex){
+    public ScheduleDetailViewModel(int scheduleID){
         try {
-            schedule= RemoteScheduleManager.getInstance().getScheduleAt(scheduleIndex);
+            schedule= RemoteScheduleManager.getInstance().getScheduleByID(scheduleID);
         }catch (Exception e){
             e.printStackTrace();
         }
