@@ -41,7 +41,7 @@
             tools:text="The episode title " />
 
         <TextView
-            android:id="@+id/tv_schedule_show_description"
+            android:id="@+id/tv_schedule_show_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

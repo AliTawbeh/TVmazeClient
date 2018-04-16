@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             app:itemBinder="@{scheduleView.itemBinder}"
             app:clickHandler="@{scheduleView.clickHandler}"
-            app:items="@{scheduleViewModel.mScheduleList}"
+            app:items="@{scheduleViewModel.getScheduleList}"
             />
     </FrameLayout>
 

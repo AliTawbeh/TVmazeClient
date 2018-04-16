@@ -25,7 +25,7 @@ public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAda
     //The callback that is called by ObservableList when the list has changed.
     private CustomOnListChangedCallback mCustomOnListChangedCallback;
     private LayoutInflater mInflater;
-    private ClickHandler<T> mClickHandler;
+    private ClickHandler mClickHandler;
 
     RecyclerViewAdapter(@NonNull ItemBinder itemBinder, @NonNull List<T> items){
         mItemBinder=itemBinder;
@@ -54,7 +54,7 @@ public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAda
         if(mItemBinder !=null)
             holder.mViewDataBinding.setVariable(mItemBinder.getBindingVariable(),item);
         //Attach the item to the viewHolder so it can be used for example when we want to delete it in swipe event
-        holder.mViewDataBinding.getRoot().setTag(ITEM_TAG,item);
+        holder.mViewDataBinding.getRoot().setTag(ITEM_TAG,position);
         holder.mViewDataBinding.getRoot().setOnClickListener(this);
         holder.mViewDataBinding.executePendingBindings();
     }
@@ -108,10 +108,10 @@ public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAda
     @Override
     public void onClick(View v) {
         if(mClickHandler!=null)
-            mClickHandler.onClick((T) v.getTag(ITEM_TAG));
+            mClickHandler.onClick((Integer) v.getTag(ITEM_TAG));
     }
 
-    public void setClickHandler(ClickHandler<T> clickHandler) { mClickHandler = clickHandler; }
+    public void setClickHandler(ClickHandler clickHandler) { mClickHandler = clickHandler; }
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {

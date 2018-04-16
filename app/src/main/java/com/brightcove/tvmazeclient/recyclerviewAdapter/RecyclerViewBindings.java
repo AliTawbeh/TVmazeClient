@@ -21,7 +21,7 @@ public class RecyclerViewBindings {
     public static <T> void setItemBinder(RecyclerView recyclerView, ItemBinder itemBinder){
         RecyclerViewAdapter<T> adapter = new RecyclerViewAdapter<>(itemBinder,(List<T>) recyclerView.getTag(DATA_KEY));
 
-        ClickHandler<T> clickHandler = (ClickHandler<T>) recyclerView.getTag(CLICK_HANDLER_KEY);
+        ClickHandler clickHandler = (ClickHandler) recyclerView.getTag(CLICK_HANDLER_KEY);
 
         if(clickHandler!=null)
             adapter.setClickHandler(clickHandler);
@@ -30,7 +30,7 @@ public class RecyclerViewBindings {
     }
 
     @BindingAdapter("clickHandler")
-    public static <T> void setClickHandler(RecyclerView recyclerView, ClickHandler<T> clickHandler){
+    public static <T> void setClickHandler(RecyclerView recyclerView, ClickHandler clickHandler){
         RecyclerViewAdapter<T> adapter = (RecyclerViewAdapter<T>) recyclerView.getAdapter();
         if(adapter==null)
             recyclerView.setTag(CLICK_HANDLER_KEY,clickHandler);
