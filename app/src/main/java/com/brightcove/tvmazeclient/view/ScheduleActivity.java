@@ -19,7 +19,7 @@ import android.widget.DatePicker;
 
 import com.brightcove.tvmazeclient.BR;
 import com.brightcove.tvmazeclient.R;
-import com.brightcove.tvmazeclient.model.Schedule;
+import com.brightcove.tvmazeclient.data.model.Schedule;
 import com.brightcove.tvmazeclient.recyclerviewAdapter.RecyclerViewAdapter;
 import com.brightcove.tvmazeclient.viewModel.ScheduleViewModel;
 import com.brightcove.tvmazeclient.databinding.ActivityScheduleBinding;
@@ -32,7 +32,6 @@ import timber.log.Timber;
 //TODO create an interface for this guy
 public class ScheduleActivity extends AppCompatActivity
         implements DatePickerDialog.OnDateSetListener{
-    private static final String ACTIVITY_NAME = ScheduleActivity.class.getName();
     ActivityScheduleBinding mBinding;
     ScheduleViewModel mScheduleViewModel;
     @Override
@@ -90,7 +89,8 @@ public class ScheduleActivity extends AppCompatActivity
     public ClickHandler<Schedule> clickHandler = schedule -> {
         Timber.d(schedule.getId()+"");
         Intent intent = new Intent(this,ScheduleDetailActivity.class);
-        intent.putExtra(ScheduleDetailActivity.SCHEDULE_ID,schedule.getId());
+        intent.putExtra(ScheduleDetailActivity.SCHEDULE_ID, schedule.getId());
+        intent.putExtra(ScheduleDetailActivity.SCHEDULE_DATE, schedule.getAirdate());
         startActivity(intent);
     };
 

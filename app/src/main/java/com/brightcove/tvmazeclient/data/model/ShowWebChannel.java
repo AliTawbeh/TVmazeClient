@@ -1,4 +1,4 @@
-package com.brightcove.tvmazeclient.model;
+package com.brightcove.tvmazeclient.data.model;
 
 /**
  * Created by Ali on 13-Apr-18.

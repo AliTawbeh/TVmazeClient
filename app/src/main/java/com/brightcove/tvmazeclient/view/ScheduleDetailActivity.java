@@ -12,6 +12,7 @@ import com.brightcove.tvmazeclient.viewModel.ScheduleDetailViewModel;
 public class ScheduleDetailActivity extends AppCompatActivity {
 
     public static final String SCHEDULE_ID = "SCHEDULE_ID";
+    public static final String SCHEDULE_DATE = "SCHEDULE_DATE";
     public static final int SCHEDULE_ID_DEFAULT_VALUE = -1;
 
     @Override
@@ -21,9 +22,19 @@ public class ScheduleDetailActivity extends AppCompatActivity {
                 DataBindingUtil.setContentView(this, R.layout.activity_schedule_detail);
         Intent intent = getIntent();
         if(intent.hasExtra(SCHEDULE_ID)){
-            int scheduleID=intent.getIntExtra(SCHEDULE_ID, SCHEDULE_ID_DEFAULT_VALUE);
-            ScheduleDetailViewModel scheduleDetailViewModel = new ScheduleDetailViewModel(scheduleID);
+            int scheduleID = intent.getIntExtra(SCHEDULE_ID, SCHEDULE_ID_DEFAULT_VALUE);
+            String scheduleDate = intent.getStringExtra(SCHEDULE_DATE);
+            ScheduleDetailViewModel scheduleDetailViewModel =
+                    new ScheduleDetailViewModel(scheduleID, scheduleDate);
             binding.setScheduleDetailViewModel(scheduleDetailViewModel);
-        }
+        }else
+            this.finish();
+    }
+
+    //I added this to prevent the system from recreating the parent activity when up button is clicked
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

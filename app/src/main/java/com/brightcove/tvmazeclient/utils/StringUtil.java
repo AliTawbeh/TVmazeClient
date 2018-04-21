@@ -14,4 +14,8 @@ public final class StringUtil {
             spanned = Html.fromHtml(htmlString);
         return spanned;
     }
+
+    public static boolean isNullOrEmpty(String date) {
+        return date.isEmpty() || date.length()==0;
+    }
 }

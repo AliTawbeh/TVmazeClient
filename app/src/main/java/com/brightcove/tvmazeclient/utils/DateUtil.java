@@ -9,9 +9,18 @@ import java.util.Locale;
  */
 
 public final class DateUtil {
-    public static String getTodaysDate(){
+    public static String getTodayDateUIFormat(){
         long date = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("EEE MM dd, yyyy", Locale.US);
+        return sdf.format(date);
+    }
+
+    public static String getTodayDateAPIFormat(){
+        return getDateAPIFormat(System.currentTimeMillis());
+    }
+
+    private static String getDateAPIFormat(long date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         return sdf.format(date);
     }
 
@@ -24,9 +33,8 @@ public final class DateUtil {
     }
 
     public static String toAPIFormatDate(int year, int month, int day){
-        //month are indexed starting 0
-        String monthStr = (++month<10)? "0"+month:month+"";
-        String dayStr = day<10? "0" + day:day+"";
-        return year + "-" + monthStr + "-" + dayStr;
+        Calendar c = Calendar.getInstance();
+        c.set(year, month, day);
+        return getDateAPIFormat(c.getTimeInMillis());
     }
 }

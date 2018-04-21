@@ -1,6 +1,4 @@
-package com.brightcove.tvmazeclient.model;
-
-import com.google.gson.JsonObject;
+package com.brightcove.tvmazeclient.data.model;
 
 /**
  * Created by Ali on 12-Apr-18.

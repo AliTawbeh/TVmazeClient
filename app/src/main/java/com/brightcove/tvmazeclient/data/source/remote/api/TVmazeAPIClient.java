@@ -1,6 +1,6 @@
-package com.brightcove.tvmazeclient.api;
+package com.brightcove.tvmazeclient.data.source.remote.api;
 
-import com.brightcove.tvmazeclient.model.Schedule;
+import com.brightcove.tvmazeclient.data.model.Schedule;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

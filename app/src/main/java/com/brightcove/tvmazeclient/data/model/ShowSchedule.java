@@ -1,4 +1,4 @@
-package com.brightcove.tvmazeclient.model;
+package com.brightcove.tvmazeclient.data.model;
 
 import java.util.Arrays;
 

@@ -5,10 +5,13 @@ import android.databinding.Bindable;
 import android.databinding.ObservableList;
 
 import com.brightcove.tvmazeclient.BR;
-import com.brightcove.tvmazeclient.datamanager.RemoteScheduleManager;
-import com.brightcove.tvmazeclient.model.Schedule;
+import com.brightcove.tvmazeclient.Injection;
+import com.brightcove.tvmazeclient.data.model.Schedule;
+import com.brightcove.tvmazeclient.data.source.ScheduleRepository;
 import com.brightcove.tvmazeclient.recyclerviewAdapter.StringGenericComparator;
 import com.brightcove.tvmazeclient.utils.DateUtil;
+
+import timber.log.Timber;
 
 /**
  * Created by Ali on 14-Apr-18.
@@ -18,10 +21,11 @@ public class ScheduleViewModel extends BaseObservable{
     @Bindable
     private ObservableList<Schedule> scheduleList;
 
-    private String scheduleDate=DateUtil.getTodaysDate();
+    private String scheduleDate=DateUtil.getTodayDateUIFormat();
+    private static final ScheduleRepository scheduleRepository = Injection.provideScheduleRepository();
 
     public ScheduleViewModel(){
-        scheduleList= RemoteScheduleManager.getInstance().getScheduleList();
+        scheduleList= scheduleRepository.getScheduleList();
     }
 
     @Bindable
@@ -32,7 +36,9 @@ public class ScheduleViewModel extends BaseObservable{
     public void setScheduleDate(int year, int month, int day){
         scheduleDate = DateUtil.formatDate(year,month,day);
         notifyPropertyChanged(BR.scheduleDate);
-        RemoteScheduleManager.getInstance().fetchSchedulesByDate(DateUtil.toAPIFormatDate(year,month,day));
+        Timber.i("Picked year, month and date %d %d %d", year,month,day);
+        scheduleList = scheduleRepository.getScheduleListByDate(DateUtil.toAPIFormatDate(year,month,day));
+        notifyPropertyChanged(BR.scheduleList);
     }
 
     public ObservableList<Schedule> getScheduleList(){

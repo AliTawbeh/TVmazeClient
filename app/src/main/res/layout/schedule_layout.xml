@@ -5,7 +5,7 @@
     <data>
         <variable
             name="schedule"
-            type="com.brightcove.tvmazeclient.model.Schedule"/>
+            type="com.brightcove.tvmazeclient.data.model.Schedule"/>
     </data>
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -30,15 +30,17 @@
             android:id="@+id/tv_schedule_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:layout_marginEnd="8dp"
-            android:layout_marginLeft="@dimen/list_item_title_left_margin"
             android:layout_marginStart="@dimen/list_item_title_start_margin"
             android:text="@{schedule.name}"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/tv_schedule_airtime"
-            tools:text="The episode title " />
+            tools:text="The episode title" />
 
         <TextView
             android:id="@+id/tv_schedule_show_name"
@@ -48,7 +50,6 @@
             android:text="@{schedule.show.name}"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/sub_text"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/tv_schedule_name"
             app:layout_constraintTop_toTopOf="@+id/guideline"
             tools:text="bla bla bla bla" />

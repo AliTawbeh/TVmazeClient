@@ -22,7 +22,7 @@
             android:hint="@{scheduleViewModel.getScheduleDate}"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:onClick="@{scheduleView.showDatePickerDialog}"/>
+            android:onClick="@{scheduleView::showDatePickerDialog}"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_schedule"
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             app:itemBinder="@{scheduleView.itemBinder}"
             app:comparator="@{scheduleViewModel.getStringComparator}"
             app:clickHandler="@{scheduleView.clickHandler}"
-            app:items="@{scheduleViewModel.getScheduleList}"
+            app:items="@{scheduleViewModel.scheduleList}"
             />
     </LinearLayout>
 
