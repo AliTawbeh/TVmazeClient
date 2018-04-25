@@ -1,0 +1,291 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "041cb2f0427eae64579c5ad6cc1c227b",
+    "entities": [
+      {
+        "tableName": "Schedule",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `url` TEXT, `name` TEXT, `season` INTEGER NOT NULL, `number` INTEGER NOT NULL, `airdate` TEXT, `airtime` TEXT, `airstamp` TEXT, `runtime` INTEGER NOT NULL, `summary` TEXT, `ImageRefmedium` TEXT, `ImageReforiginal` TEXT, `Showid` INTEGER, `Showurl` TEXT, `Showname` TEXT, `Showtype` TEXT, `Showlanguage` TEXT, `Showgenres` TEXT, `Showstatus` TEXT, `Showruntime` INTEGER, `Showprimiered` TEXT, `ShowofficialSite` TEXT, `Showweight` INTEGER, `Showsummary` TEXT, `Showupdated` INTEGER, `ShowShowScheduletime` TEXT, `ShowShowScheduledays` TEXT, `ShowShowRatingaverage` REAL, `ShowShowNetworkid` INTEGER, `ShowShowNetworkname` TEXT, `ShowShowNetworkNetworkCountryname` TEXT, `ShowShowNetworkNetworkCountrycode` TEXT, `ShowShowNetworkNetworkCountrytimezone` TEXT, `ShowShowWebChannelid` TEXT, `ShowShowWebChannelname` TEXT, `ShowShowExternalstvrage` INTEGER, `ShowShowExternalsthetvdb` INTEGER, `ShowShowExternalsimdb` TEXT, `ShowImageRefmedium` TEXT, `ShowImageReforiginal` TEXT, `ShowShowLinksLinkRef_Selfhref` TEXT, `ShowShowLinksLinkRef_PreviousEpisodehref` TEXT, `ShowShowLinksLinkRef_NextEpisodehref` TEXT, `ScheduleLinksLinkRefhref` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "season",
+            "columnName": "season",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "number",
+            "columnName": "number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "airdate",
+            "columnName": "airdate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "airtime",
+            "columnName": "airtime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "airstamp",
+            "columnName": "airstamp",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "runtime",
+            "columnName": "runtime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "summary",
+            "columnName": "summary",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "image.medium",
+            "columnName": "ImageRefmedium",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "image.original",
+            "columnName": "ImageReforiginal",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.id",
+            "columnName": "Showid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.url",
+            "columnName": "Showurl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.name",
+            "columnName": "Showname",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.type",
+            "columnName": "Showtype",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.language",
+            "columnName": "Showlanguage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.genres",
+            "columnName": "Showgenres",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.status",
+            "columnName": "Showstatus",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.runtime",
+            "columnName": "Showruntime",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.primiered",
+            "columnName": "Showprimiered",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.officialSite",
+            "columnName": "ShowofficialSite",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.weight",
+            "columnName": "Showweight",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.summary",
+            "columnName": "Showsummary",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.updated",
+            "columnName": "Showupdated",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.schedule.time",
+            "columnName": "ShowShowScheduletime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.schedule.days",
+            "columnName": "ShowShowScheduledays",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.rating.average",
+            "columnName": "ShowShowRatingaverage",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.network.id",
+            "columnName": "ShowShowNetworkid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.network.name",
+            "columnName": "ShowShowNetworkname",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.network.country.name",
+            "columnName": "ShowShowNetworkNetworkCountryname",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.network.country.code",
+            "columnName": "ShowShowNetworkNetworkCountrycode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.network.country.timezone",
+            "columnName": "ShowShowNetworkNetworkCountrytimezone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.webChannel.id",
+            "columnName": "ShowShowWebChannelid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.webChannel.name",
+            "columnName": "ShowShowWebChannelname",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.externals.tvrage",
+            "columnName": "ShowShowExternalstvrage",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.externals.thetvdb",
+            "columnName": "ShowShowExternalsthetvdb",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.externals.imdb",
+            "columnName": "ShowShowExternalsimdb",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.image.medium",
+            "columnName": "ShowImageRefmedium",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show.image.original",
+            "columnName": "ShowImageReforiginal",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show._links.self.href",
+            "columnName": "ShowShowLinksLinkRef_Selfhref",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show._links.previousepisode.href",
+            "columnName": "ShowShowLinksLinkRef_PreviousEpisodehref",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "show._links.nextepisode.href",
+            "columnName": "ShowShowLinksLinkRef_NextEpisodehref",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "_links.self.href",
+            "columnName": "ScheduleLinksLinkRefhref",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"041cb2f0427eae64579c5ad6cc1c227b\")"
+    ]
+  }
+}

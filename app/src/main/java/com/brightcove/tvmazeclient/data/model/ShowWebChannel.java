@@ -4,7 +4,7 @@ package com.brightcove.tvmazeclient.data.model;
  * Created by Ali on 13-Apr-18.
  */
 
-class ShowWebChannel {
+public class ShowWebChannel {
     private String id;
     private String name;
 
@@ -14,6 +14,14 @@ class ShowWebChannel {
 
     public String getName() {
         return name;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

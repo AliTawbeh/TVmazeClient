@@ -21,6 +21,18 @@ public class ShowExternals {
         return imdb;
     }
 
+    public void setTvrage(int tvrage) {
+        this.tvrage = tvrage;
+    }
+
+    public void setThetvdb(int thetvdb) {
+        this.thetvdb = thetvdb;
+    }
+
+    public void setImdb(String imdb) {
+        this.imdb = imdb;
+    }
+
     @Override
     public String toString() {
         return "ShowExternals{" +

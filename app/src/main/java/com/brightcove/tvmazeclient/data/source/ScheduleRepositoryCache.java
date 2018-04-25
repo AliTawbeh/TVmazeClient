@@ -18,71 +18,71 @@ import java.util.Queue;
 class ScheduleRepositoryCache {
     private static final int CACHE_CAPACITY=14;
 
-    private ObservableList<Schedule> todayObservableScheduleList;
-    private ObservableMap<String,ObservableList<Schedule>> otherDaysObservableScheduleListMap;
-    private Queue<String> schedulesDatesCached;
-    private boolean isCacheDirty;
+    private ObservableList<Schedule> mTodayObservableScheduleList;
+    private ObservableMap<String,ObservableList<Schedule>> mOtherDaysObservableScheduleListMap;
+    private Queue<String> mSchedulesDatesCached;
+    private boolean mIsCacheDirty;
 
     ScheduleRepositoryCache(){
-        todayObservableScheduleList = new ObservableArrayList<>();
-        otherDaysObservableScheduleListMap = new ObservableArrayMap<>();
-        schedulesDatesCached = new LinkedList<>();
-        isCacheDirty = true;
+        mTodayObservableScheduleList = new ObservableArrayList<>();
+        mOtherDaysObservableScheduleListMap = new ObservableArrayMap<>();
+        mSchedulesDatesCached = new LinkedList<>();
+        mIsCacheDirty = true;
     }
 
-    ObservableList<Schedule> getTodayObservableScheduleList() {
-        return todayObservableScheduleList;
+        ObservableList<Schedule> getmTodayObservableScheduleList() {
+        return mTodayObservableScheduleList;
     }
 
-    void setTodayObservableScheduleList(List<Schedule> todayObservableScheduleList) {
-        this.todayObservableScheduleList.clear();
-        this.todayObservableScheduleList.addAll(todayObservableScheduleList);
-        //this.todayObservableScheduleList = todayObservableScheduleList;
+    void setmTodayObservableScheduleList(List<Schedule> mTodayObservableScheduleList) {
+        this.mTodayObservableScheduleList.clear();
+        this.mTodayObservableScheduleList.addAll(mTodayObservableScheduleList);
+        //this.mTodayObservableScheduleList = mTodayObservableScheduleList;
     }
 
     ObservableList<Schedule> getOtherDaysObservableScheduleListMap(String date){
-        if(otherDaysObservableScheduleListMap.containsKey(date))
-            return otherDaysObservableScheduleListMap.get(date);
-        setCacheDirty(true);
+        if(mOtherDaysObservableScheduleListMap.containsKey(date))
+            return mOtherDaysObservableScheduleListMap.get(date);
+        setmIsCacheDirty(true);
         return addOtherDaysObservableScheduleListMap(date);
 
     }
 
     private ObservableList<Schedule> addOtherDaysObservableScheduleListMap(String date){
         ObservableList<Schedule> tmp =  new ObservableArrayList<>();
-        if(otherDaysObservableScheduleListMap.size()==CACHE_CAPACITY){
+        if(mOtherDaysObservableScheduleListMap.size()==CACHE_CAPACITY){
             //Free the oldest list
-            tmp = otherDaysObservableScheduleListMap.remove(schedulesDatesCached.poll());
+            tmp = mOtherDaysObservableScheduleListMap.remove(mSchedulesDatesCached.poll());
             tmp.clear();
         }
-        otherDaysObservableScheduleListMap.put(date, tmp);
+        mOtherDaysObservableScheduleListMap.put(date, tmp);
 
-        schedulesDatesCached.add(date);
+        mSchedulesDatesCached.add(date);
         return tmp;
     }
 
-    boolean isCacheDirty() {
-        return isCacheDirty;
+    boolean ismIsCacheDirty() {
+        return mIsCacheDirty;
     }
 
-    void setCacheDirty(boolean cacheDirty) {
-        isCacheDirty = cacheDirty;
+    void setmIsCacheDirty(boolean mIsCacheDirty) {
+        this.mIsCacheDirty = mIsCacheDirty;
     }
     
     boolean todayScheduleIsEmpty(){
-        return todayObservableScheduleList.isEmpty();
+        return mTodayObservableScheduleList.isEmpty();
     }
 
     boolean isScheduleAvailable(String date) {
-        return otherDaysObservableScheduleListMap.containsKey(date);
+        return mOtherDaysObservableScheduleListMap.containsKey(date);
     }
 
     Schedule getTodaySchedule(int scheduleID) throws IllegalArgumentException{
-        return findSchedule(this.todayObservableScheduleList,scheduleID);
+        return findSchedule(this.mTodayObservableScheduleList,scheduleID);
     }
 
     Schedule getScheduleByIDAndDate(int scheduleID, String date) {
-        ObservableList<Schedule> scheduleList = otherDaysObservableScheduleListMap.get(date);
+        ObservableList<Schedule> scheduleList = mOtherDaysObservableScheduleListMap.get(date);
         if(scheduleList != null){
             return findSchedule(scheduleList,scheduleID);
         }

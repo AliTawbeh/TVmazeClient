@@ -1,8 +1,5 @@
 package com.brightcove.tvmazeclient.data.source.remote;
 
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
-
 import com.brightcove.tvmazeclient.data.model.Schedule;
 import com.brightcove.tvmazeclient.data.source.ScheduleDataSource;
 import com.brightcove.tvmazeclient.data.source.remote.api.TVmazeAPIClient;
@@ -36,12 +33,12 @@ public class RemoteScheduleDataSource implements ScheduleDataSource {
 
     @Override
     public void getScheduleList(LoadSchedulesCallback loadSchedulesCallback) {
-        fetchSchedules("",loadSchedulesCallback);
+        fetchScheduleList("",loadSchedulesCallback);
     }
 
     @Override
     public void getScheduleListByDate(String date, LoadSchedulesCallback loadSchedulesCallback) {
-        fetchSchedules(date,loadSchedulesCallback);
+        fetchScheduleList(date,loadSchedulesCallback);
     }
 
     @Override
@@ -50,7 +47,7 @@ public class RemoteScheduleDataSource implements ScheduleDataSource {
             disposable.dispose();
     }
 
-    private void fetchSchedules(String date, LoadSchedulesCallback callback) {
+    private void fetchScheduleList(String date, LoadSchedulesCallback callback) {
         Observable<List<Schedule>> rxObservableScheduleList;
 
         if (StringUtil.isNullOrEmpty(date))
@@ -62,10 +59,10 @@ public class RemoteScheduleDataSource implements ScheduleDataSource {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(scheduleList -> {
-                    ObservableList<Schedule> observableScheduleList = new ObservableArrayList<>();
-                    observableScheduleList.addAll(scheduleList);
+//                    ObservableList<Schedule> observableScheduleList = new ObservableArrayList<>();
+//                    observableScheduleList.addAll(scheduleList);
                     Timber.d("fetchSchedule");
-                    callback.onScheduleListLoaded(observableScheduleList);
+                    callback.onScheduleListLoaded(scheduleList);
                 }, throwable -> {
                     Timber.d("***" + throwable.getMessage() + "**" + throwable.getClass().getSimpleName());
                     if (throwable instanceof UnknownHostException) {

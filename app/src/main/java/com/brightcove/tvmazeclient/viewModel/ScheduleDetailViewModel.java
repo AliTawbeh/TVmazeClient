@@ -1,5 +1,6 @@
 package com.brightcove.tvmazeclient.viewModel;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
@@ -15,9 +16,9 @@ import com.brightcove.tvmazeclient.data.model.Schedule;
 
 public class ScheduleDetailViewModel extends BaseObservable{
     private Schedule schedule;
-    public ScheduleDetailViewModel(int scheduleID, String date){
+    public ScheduleDetailViewModel(Context context, int scheduleID, String date){
         try {
-            schedule= Injection.provideScheduleRepository().getScheduleByIDAndDate(scheduleID,date);
+            schedule= Injection.provideScheduleRepository(context).getScheduleByIDAndDate(scheduleID,date);
             notifyPropertyChanged(BR.schedule);
         }catch (Exception e){
             e.printStackTrace();

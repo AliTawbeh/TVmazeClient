@@ -25,7 +25,7 @@ public class ScheduleDetailActivity extends AppCompatActivity {
             int scheduleID = intent.getIntExtra(SCHEDULE_ID, SCHEDULE_ID_DEFAULT_VALUE);
             String scheduleDate = intent.getStringExtra(SCHEDULE_DATE);
             ScheduleDetailViewModel scheduleDetailViewModel =
-                    new ScheduleDetailViewModel(scheduleID, scheduleDate);
+                    new ScheduleDetailViewModel(this.getApplicationContext(), scheduleID, scheduleDate);
             binding.setScheduleDetailViewModel(scheduleDetailViewModel);
         }else
             this.finish();

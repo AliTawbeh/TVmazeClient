@@ -1,7 +1,10 @@
 package com.brightcove.tvmazeclient;
 
+import android.content.Context;
+
 import com.brightcove.tvmazeclient.data.source.ScheduleRepository;
 import com.brightcove.tvmazeclient.data.source.local.LocalScheduleDataSource;
+import com.brightcove.tvmazeclient.data.source.local.ScheduleDatabase;
 import com.brightcove.tvmazeclient.data.source.remote.RemoteScheduleDataSource;
 
 /**
@@ -9,8 +12,9 @@ import com.brightcove.tvmazeclient.data.source.remote.RemoteScheduleDataSource;
  */
 
 public class Injection {
-    public static ScheduleRepository provideScheduleRepository(){
+    public static ScheduleRepository provideScheduleRepository(Context context){
+        ScheduleDatabase db = ScheduleDatabase.getInstance(context);
         return ScheduleRepository.getInstance(RemoteScheduleDataSource.getInstance(),
-                LocalScheduleDataSource.getInstance());
+                LocalScheduleDataSource.getInstance(db.scheduleDao()));
     }
 }

@@ -16,6 +16,14 @@ public class ImageRef {
         return original;
     }
 
+    public void setMedium(String medium) {
+        this.medium = medium;
+    }
+
+    public void setOriginal(String original) {
+        this.original = original;
+    }
+
     @Override
     public String toString() {
         return "ImageRef{" +

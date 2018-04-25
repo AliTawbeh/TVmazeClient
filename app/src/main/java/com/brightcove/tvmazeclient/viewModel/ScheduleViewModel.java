@@ -1,5 +1,6 @@
 package com.brightcove.tvmazeclient.viewModel;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableList;
@@ -22,9 +23,10 @@ public class ScheduleViewModel extends BaseObservable{
     private ObservableList<Schedule> scheduleList;
 
     private String scheduleDate=DateUtil.getTodayDateUIFormat();
-    private static final ScheduleRepository scheduleRepository = Injection.provideScheduleRepository();
+    private final ScheduleRepository scheduleRepository;
 
-    public ScheduleViewModel(){
+    public ScheduleViewModel(Context context){
+        scheduleRepository = Injection.provideScheduleRepository(context);
         scheduleList= scheduleRepository.getScheduleList();
     }
 

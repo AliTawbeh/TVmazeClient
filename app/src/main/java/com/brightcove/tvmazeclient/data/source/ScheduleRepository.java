@@ -35,14 +35,14 @@ public class ScheduleRepository {
     }
 
     public ObservableList<Schedule> getScheduleList(){
-        if(mScheduleRepositoryCache.todayScheduleIsEmpty() || mScheduleRepositoryCache.isCacheDirty()){
-            if (mScheduleRepositoryCache.isCacheDirty()){
+        if(mScheduleRepositoryCache.todayScheduleIsEmpty() || mScheduleRepositoryCache.ismIsCacheDirty()){
+            if (mScheduleRepositoryCache.ismIsCacheDirty()){
                 //cache is dirty, means force update, so we need to fetch data from the remote source and update the cache and the DB
                 mRemoteScheduleDataSource.getScheduleList(new ScheduleDataSource.LoadSchedulesCallback() {
                     @Override
                     public void onScheduleListLoaded(List<Schedule> scheduleList) {
-                        mScheduleRepositoryCache.setTodayObservableScheduleList(scheduleList);
-                        mScheduleRepositoryCache.setCacheDirty(false);
+                        mScheduleRepositoryCache.setmTodayObservableScheduleList(scheduleList);
+                        mScheduleRepositoryCache.setmIsCacheDirty(false);
                     }
 
                     @Override
@@ -64,13 +64,13 @@ public class ScheduleRepository {
                 });
             }
         }
-        return mScheduleRepositoryCache.getTodayObservableScheduleList();
+        return mScheduleRepositoryCache.getmTodayObservableScheduleList();
     }
 
     public ObservableList<Schedule> getScheduleListByDate(String date){
         ObservableList<Schedule> cachedScheduleList = mScheduleRepositoryCache.getOtherDaysObservableScheduleListMap(date);
-        if(!mScheduleRepositoryCache.isScheduleAvailable(date) || mScheduleRepositoryCache.isCacheDirty()){
-            if (mScheduleRepositoryCache.isCacheDirty()){
+        if(!mScheduleRepositoryCache.isScheduleAvailable(date) || mScheduleRepositoryCache.ismIsCacheDirty()){
+            if (mScheduleRepositoryCache.ismIsCacheDirty()){
                 //cache is dirty, means force update, so we need to fetch data from the remote source and update the cache and the DB
                 mRemoteScheduleDataSource.getScheduleListByDate(date, new ScheduleDataSource.LoadSchedulesCallback() {
                     @Override
@@ -79,7 +79,7 @@ public class ScheduleRepository {
                         cachedScheduleList.clear();
                         cachedScheduleList.addAll(scheduleList);
                         Timber.d("onScheduleListLoaded");
-                        mScheduleRepositoryCache.setCacheDirty(false);
+                        mScheduleRepositoryCache.setmIsCacheDirty(false);
                     }
 
                     @Override
@@ -112,6 +112,6 @@ public class ScheduleRepository {
     }
 
     public void refreshCache(){
-        mScheduleRepositoryCache.setCacheDirty(true);
+        mScheduleRepositoryCache.setmIsCacheDirty(true);
     }
 }

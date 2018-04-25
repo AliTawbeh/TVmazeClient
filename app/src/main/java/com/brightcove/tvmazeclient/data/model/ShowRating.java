@@ -11,6 +11,10 @@ public class ShowRating {
         return average;
     }
 
+    public void setAverage(double average) {
+        this.average = average;
+    }
+
     @Override
     public String toString() {
         return "ShowRating{" +

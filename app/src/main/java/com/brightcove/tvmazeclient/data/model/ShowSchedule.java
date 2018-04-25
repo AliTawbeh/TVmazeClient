@@ -18,6 +18,14 @@ public class ShowSchedule {
         return days;
     }
 
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setDays(String[] days) {
+        this.days = days;
+    }
+
     @Override
     public String toString() {
         return "ShowSchedule{" +

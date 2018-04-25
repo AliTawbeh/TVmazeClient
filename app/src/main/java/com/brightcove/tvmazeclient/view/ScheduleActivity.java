@@ -39,7 +39,7 @@ public class ScheduleActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_schedule);
         //TODO use and interface instead of concrete class
-        mScheduleViewModel = new ScheduleViewModel();
+        mScheduleViewModel = new ScheduleViewModel(this.getApplicationContext());
         mBinding.setScheduleViewModel(mScheduleViewModel);
         mBinding.setScheduleView(this);
         mBinding.rvSchedule.setLayoutManager(new LinearLayoutManager(this));
