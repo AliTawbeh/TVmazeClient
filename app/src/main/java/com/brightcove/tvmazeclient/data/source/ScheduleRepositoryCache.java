@@ -27,23 +27,17 @@ class ScheduleRepositoryCache {
         mTodayObservableScheduleList = new ObservableArrayList<>();
         mOtherDaysObservableScheduleListMap = new ObservableArrayMap<>();
         mSchedulesDatesCached = new LinkedList<>();
-        mIsCacheDirty = true;
+        mIsCacheDirty = false;
     }
 
-        ObservableList<Schedule> getmTodayObservableScheduleList() {
+        ObservableList<Schedule> getTodayObservableScheduleList() {
         return mTodayObservableScheduleList;
-    }
-
-    void setmTodayObservableScheduleList(List<Schedule> mTodayObservableScheduleList) {
-        this.mTodayObservableScheduleList.clear();
-        this.mTodayObservableScheduleList.addAll(mTodayObservableScheduleList);
-        //this.mTodayObservableScheduleList = mTodayObservableScheduleList;
     }
 
     ObservableList<Schedule> getOtherDaysObservableScheduleListMap(String date){
         if(mOtherDaysObservableScheduleListMap.containsKey(date))
             return mOtherDaysObservableScheduleListMap.get(date);
-        setmIsCacheDirty(true);
+        //setmIsCacheDirty(true);
         return addOtherDaysObservableScheduleListMap(date);
 
     }
@@ -74,7 +68,8 @@ class ScheduleRepositoryCache {
     }
 
     boolean isScheduleAvailable(String date) {
-        return mOtherDaysObservableScheduleListMap.containsKey(date);
+        return mOtherDaysObservableScheduleListMap.containsKey(date) &&
+                mOtherDaysObservableScheduleListMap.get(date).size()>0;
     }
 
     Schedule getTodaySchedule(int scheduleID) throws IllegalArgumentException{

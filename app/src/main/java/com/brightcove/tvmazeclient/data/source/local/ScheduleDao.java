@@ -16,7 +16,7 @@ import io.reactivex.Single;
  */
 @Dao
 public interface ScheduleDao {
-    @Query("SELECT * FROM Schedule WHERE Schedule.airdate = :date")
+    @Query("SELECT * FROM Schedule WHERE Schedule.airdate = :date ORDER BY time(Schedule.airtime)")
     Single<List<Schedule>> getScheduleListByDate(String date);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -51,7 +51,9 @@ public class LocalScheduleDataSource implements ScheduleDataSource {
                 });
     }
 
+    @Override
     public void saveScheduleList(List<Schedule> scheduleList){
+
         Completable.fromAction(() -> mScheduleDao.insertSchedule(scheduleList))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

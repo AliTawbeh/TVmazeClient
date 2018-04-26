@@ -17,5 +17,7 @@ public interface ScheduleDataSource {
 
     void getScheduleListByDate(String date, LoadSchedulesCallback loadSchedulesCallback);
 
+    void saveScheduleList(List<Schedule> scheduleList);
+
     void onDestroy();
 }

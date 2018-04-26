@@ -42,6 +42,11 @@ public class RemoteScheduleDataSource implements ScheduleDataSource {
     }
 
     @Override
+    public void saveScheduleList(List<Schedule> scheduleList) {
+        //Not needed for now
+    }
+
+    @Override
     public void onDestroy() {
         if(disposable !=null && !disposable.isDisposed())
             disposable.dispose();

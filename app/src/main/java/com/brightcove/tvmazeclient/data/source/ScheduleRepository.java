@@ -8,12 +8,10 @@ import com.brightcove.tvmazeclient.utils.StringUtil;
 
 import java.util.List;
 
-import timber.log.Timber;
-
 /**
  * Created by Ali on 19-Apr-18.
  */
-
+//TODO implement a strategy to wipe the old data in the DB, or it will keep growing
 public class ScheduleRepository {
     private static ScheduleRepository INSTANCE;
     private ScheduleDataSource mRemoteScheduleDataSource;
@@ -38,33 +36,27 @@ public class ScheduleRepository {
         if(mScheduleRepositoryCache.todayScheduleIsEmpty() || mScheduleRepositoryCache.ismIsCacheDirty()){
             if (mScheduleRepositoryCache.ismIsCacheDirty()){
                 //cache is dirty, means force update, so we need to fetch data from the remote source and update the cache and the DB
-                mRemoteScheduleDataSource.getScheduleList(new ScheduleDataSource.LoadSchedulesCallback() {
-                    @Override
-                    public void onScheduleListLoaded(List<Schedule> scheduleList) {
-                        mScheduleRepositoryCache.setmTodayObservableScheduleList(scheduleList);
-                        mScheduleRepositoryCache.setmIsCacheDirty(false);
-                    }
-
-                    @Override
-                    public void onDataNotAvailable() {
-
-                    }
-                });
+                getDataFromRemoteSource();
             }else {
                 mLocalScheduleDataSource.getScheduleList(new ScheduleDataSource.LoadSchedulesCallback() {
                     @Override
                     public void onScheduleListLoaded(List<Schedule> scheduleList) {
-
+                        if(scheduleList.isEmpty() ||  scheduleList.size()<10){
+                            //Call the remote server
+                            getDataFromRemoteSource();
+                        }else
+                            updateCache(mScheduleRepositoryCache.getTodayObservableScheduleList(),scheduleList);
                     }
 
                     @Override
                     public void onDataNotAvailable() {
-
+                        //Call the remote server
+                        getDataFromRemoteSource();
                     }
                 });
             }
         }
-        return mScheduleRepositoryCache.getmTodayObservableScheduleList();
+        return mScheduleRepositoryCache.getTodayObservableScheduleList();
     }
 
     public ObservableList<Schedule> getScheduleListByDate(String date){
@@ -72,36 +64,64 @@ public class ScheduleRepository {
         if(!mScheduleRepositoryCache.isScheduleAvailable(date) || mScheduleRepositoryCache.ismIsCacheDirty()){
             if (mScheduleRepositoryCache.ismIsCacheDirty()){
                 //cache is dirty, means force update, so we need to fetch data from the remote source and update the cache and the DB
-                mRemoteScheduleDataSource.getScheduleListByDate(date, new ScheduleDataSource.LoadSchedulesCallback() {
-                    @Override
-                    public void onScheduleListLoaded(List<Schedule> scheduleList) {
-                        //mScheduleRepositoryCache.addOtherDaysObservableScheduleListMap(date,scheduleList);
-                        cachedScheduleList.clear();
-                        cachedScheduleList.addAll(scheduleList);
-                        Timber.d("onScheduleListLoaded");
-                        mScheduleRepositoryCache.setmIsCacheDirty(false);
-                    }
-
-                    @Override
-                    public void onDataNotAvailable() {
-
-                    }
-                });
+                getDataFromRemoteSourceByDate(date,cachedScheduleList);
             }else {
-                mLocalScheduleDataSource.getScheduleList(new ScheduleDataSource.LoadSchedulesCallback() {
+                mLocalScheduleDataSource.getScheduleListByDate(date,new ScheduleDataSource.LoadSchedulesCallback() {
                     @Override
                     public void onScheduleListLoaded(List<Schedule> scheduleList) {
-
+                        if(scheduleList.isEmpty() || scheduleList.size()<10){
+                            //Call the remote server
+                            getDataFromRemoteSourceByDate(date,cachedScheduleList);
+                        }else
+                            updateCache(cachedScheduleList,scheduleList);
                     }
 
                     @Override
                     public void onDataNotAvailable() {
-
+                        getDataFromRemoteSourceByDate(date,cachedScheduleList);
                     }
                 });
             }
         }
         return cachedScheduleList;
+    }
+
+    private void getDataFromRemoteSource(){
+        mRemoteScheduleDataSource.getScheduleList(new ScheduleDataSource.LoadSchedulesCallback() {
+            @Override
+            public void onScheduleListLoaded(List<Schedule> scheduleList) {
+                updateCache(mScheduleRepositoryCache.getTodayObservableScheduleList(), scheduleList);
+                mScheduleRepositoryCache.setmIsCacheDirty(false);
+                mLocalScheduleDataSource.saveScheduleList(scheduleList);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                //TODO show a message that an error has occurred
+            }
+        });
+    }
+
+    private void getDataFromRemoteSourceByDate(String date, ObservableList<Schedule> cachedScheduleList){
+        mRemoteScheduleDataSource.getScheduleListByDate(date, new ScheduleDataSource.LoadSchedulesCallback() {
+            @Override
+            public void onScheduleListLoaded(List<Schedule> scheduleList) {
+                //mScheduleRepositoryCache.addOtherDaysObservableScheduleListMap(date,scheduleList);
+                updateCache(cachedScheduleList,scheduleList);
+                mScheduleRepositoryCache.setmIsCacheDirty(false);
+                mLocalScheduleDataSource.saveScheduleList(scheduleList);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                //TODO show a message that an error has occurred
+            }
+        });
+    }
+
+    private void updateCache(ObservableList<Schedule> cachedScheduleList,List<Schedule> scheduleList){
+        cachedScheduleList.clear();
+        cachedScheduleList.addAll(scheduleList);
     }
 
     public Schedule getScheduleByIDAndDate(int scheduleID, String date) throws IllegalArgumentException{
