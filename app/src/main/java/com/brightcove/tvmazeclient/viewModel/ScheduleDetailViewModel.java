@@ -6,6 +6,7 @@ import android.databinding.Bindable;
 
 import com.brightcove.tvmazeclient.BR;
 import com.brightcove.tvmazeclient.Injection;
+import com.brightcove.tvmazeclient.data.model.ImageRef;
 import com.brightcove.tvmazeclient.data.source.ScheduleRepository;
 import com.brightcove.tvmazeclient.data.source.remote.RemoteScheduleDataSource;
 import com.brightcove.tvmazeclient.data.model.Schedule;
@@ -27,6 +28,16 @@ public class ScheduleDetailViewModel extends BaseObservable{
     @Bindable
     public Schedule getSchedule(){
         return schedule;
+    }
+
+    @Bindable
+    public String getShowImage(){
+        if(schedule!=null) {
+            ImageRef imageRef = schedule.getShow().getImage();
+            if (imageRef != null)
+                return imageRef.getOriginal();
+        }
+         return "";
     }
 
 }

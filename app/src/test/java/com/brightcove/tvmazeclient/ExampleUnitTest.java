@@ -29,10 +29,30 @@ public class ExampleUnitTest {
 
     @Test
     public void testingTypeConverters() throws Exception {
-        int[] array = {1,2,3,4};
+        String[] array = {"aa","bb","cc","dd"};
         String s = CustomTypeConverters.arrayToJsonString(array);
         System.out.println(s);
-        int[] result = CustomTypeConverters.jsonStringToArray(s);
+        String[] result = CustomTypeConverters.jsonStringToArray(s);
         System.out.println(Arrays.toString(result));
+    }
+
+    class MyPoint{
+        int x;
+        int y;
+    }
+
+    public void messThePoint(MyPoint p){
+        p = new MyPoint();
+        p.x=0;
+        p.y=0;
+    }
+
+    @Test
+    public void pointersTest(){
+        MyPoint p = new MyPoint();
+        p.x=3;
+        p.y=4;
+        messThePoint(p);
+        assertTrue(p.x==3 && p.y==4);
     }
 }

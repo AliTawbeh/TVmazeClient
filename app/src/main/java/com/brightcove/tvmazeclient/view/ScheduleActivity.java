@@ -90,7 +90,7 @@ public class ScheduleActivity extends AppCompatActivity
         Timber.d(schedule.getId()+"");
         Intent intent = new Intent(this,ScheduleDetailActivity.class);
         intent.putExtra(ScheduleDetailActivity.SCHEDULE_ID, schedule.getId());
-        intent.putExtra(ScheduleDetailActivity.SCHEDULE_DATE, schedule.getAirdate());
+        intent.putExtra(ScheduleDetailActivity.SCHEDULE_DATE, mScheduleViewModel.getScheduleDateAPIFormat());
         startActivity(intent);
     };
 

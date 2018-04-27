@@ -23,6 +23,7 @@ public class ScheduleViewModel extends BaseObservable{
     private ObservableList<Schedule> scheduleList;
 
     private String scheduleDate=DateUtil.getTodayDateUIFormat();
+    private String scheduleDateAPIFormat=DateUtil.getTodayDateAPIFormat();
     private final ScheduleRepository scheduleRepository;
 
     public ScheduleViewModel(Context context){
@@ -35,11 +36,16 @@ public class ScheduleViewModel extends BaseObservable{
         return scheduleDate;
     }
 
+    public String getScheduleDateAPIFormat(){
+        return scheduleDateAPIFormat;
+    }
+
     public void setScheduleDate(int year, int month, int day){
         scheduleDate = DateUtil.formatDate(year,month,day);
+        scheduleDateAPIFormat = DateUtil.toAPIFormatDate(year,month,day);
         notifyPropertyChanged(BR.scheduleDate);
         Timber.i("Picked year, month and date %d %d %d", year,month,day);
-        scheduleList = scheduleRepository.getScheduleListByDate(DateUtil.toAPIFormatDate(year,month,day));
+        scheduleList = scheduleRepository.getScheduleListByDate(scheduleDateAPIFormat);
         notifyPropertyChanged(BR.scheduleList);
     }
 

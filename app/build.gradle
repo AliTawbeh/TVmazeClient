@@ -41,6 +41,7 @@ ext{
     rxJavaVersion = "2.1.12"
     rxAndroidVersion = "2.0.2"
     roomVersion = "1.0.0"
+    picassoVersion = "2.71828"
 }
 
 dependencies {
@@ -57,6 +58,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    //Picasso
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
     //RX
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
